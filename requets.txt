@@ -1,0 +1,43 @@
+CREATE DATABASE GestionConnaissances;
+USE GestionConnaissances;
+
+CREATE TABLE Abonne(
+num_abonne int PRIMARY KEY,
+email_abonne varchar (30) NOT NULL,
+password_abonne varchar(30) NOT NULL,
+solde Money NOT NULL);
+
+CREATE TABLE Admin(
+num_admin int PRIMARY KEY,
+email_admin varchar (30) NOT NULL,
+password_admin varchar(30) NOT NULL,
+solde Money NOT NULL);
+
+CREATE TABLE Question(
+num_question int PRIMARY KEY,
+introduction varchar (50) NOT NULL,
+déscription varchar(100) NOT NULL,
+question varchar(250) NOT NULL,
+num_abonne int FOREIGN KEY REFERENCES Abonne(num_abonne));
+
+CREATE TABLE Reponse(
+num_reponse int PRIMARY KEY,
+contenu varchar (250) NOT NULL,
+note int  NOT NULL,
+num_abonne int FOREIGN KEY REFERENCES Abonne(num_abonne),
+num_question int FOREIGN KEY REFERENCES Question(num_question));
+
+CREATE TABLE Domaine(
+num_d_n int PRIMARY KEY,
+domaine varchar (20) NOT NULL,
+niveau int  NOT NULL);
+
+CREATE TABLE Regrouper(
+num_d_n int FOREIGN KEY REFERENCES Domaine(num_d_n),
+num_abonne int FOREIGN KEY REFERENCES Abonne(num_abonne)
+PRIMARY KEY(num_d_n,num_abonne));
+
+CREATE TABLE Posseder(
+num_d_n int FOREIGN KEY REFERENCES Domaine(num_d_n),
+num_question int FOREIGN KEY REFERENCES Question(num_question)
+PRIMARY KEY(num_d_n,num_question));
